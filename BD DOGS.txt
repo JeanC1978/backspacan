@@ -1,0 +1,87 @@
+create database dog;
+
+create table dogs (
+id int not null auto_increment,
+idraza int not null,
+idtamano int not null,
+imagen varchar(200),
+fecha datetime,
+primary key(id),
+foreign key (idtamano) references tamano(id),
+foreign key (idraza) references raza(id));
+
+use dog;
+create table tamano (
+id  int not null auto_increment,
+tamano varchar(50) not null,
+fecha datetime,
+primary key(id));
+
+use dog;
+create table raza (
+id  int not null auto_increment,
+raza varchar(50) not null,
+fecha datetime,
+primary key(id));
+
+use dog;
+insert into raza (raza,fecha) values ('Fox Terrier',NOW());
+insert into raza (raza,fecha) values ('Golden Retriever',NOW());
+insert into raza (raza,fecha) values ('Cocker',NOW());
+insert into raza (raza,fecha) values ('Perro peruano',NOW());
+
+use dog;
+insert into tamano (tamano,fecha) values ('Chico',NOW());
+insert into tamano (tamano,fecha) values ('Mediano',NOW());
+insert into tamano (tamano,fecha) values ('Grande',NOW());
+
+use dog;
+insert into dogs (idraza,idtamano,imagen,fecha) values (1,1,'https://bucketpruebaperros.s3.amazonaws.com/Fox+Terrier/chico/foxchico.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (1,2,'https://bucketpruebaperros.s3.amazonaws.com/Fox+Terrier/mediano/foxmediano.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (1,3,'https://bucketpruebaperros.s3.amazonaws.com/Fox+Terrier/grande/foxadulto.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (2,1,'https://bucketpruebaperros.s3.amazonaws.com/golden+retriever/chico/golden+chico.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (2,2,'https://bucketpruebaperros.s3.amazonaws.com/golden+retriever/mediano/golden+mediano.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (2,3,'https://bucketpruebaperros.s3.amazonaws.com/golden+retriever/grande/golden+grande.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (3,1,'https://bucketpruebaperros.s3.amazonaws.com/cocker/chico/cocker+chico.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (3,2,'https://bucketpruebaperros.s3.amazonaws.com/cocker/mediano/cocker+mediano.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (3,3,'https://bucketpruebaperros.s3.amazonaws.com/cocker/grande/cocker+grande.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (4,1,'https://bucketpruebaperros.s3.amazonaws.com/Perro+peruano/chico/peruano+bebe.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (4,2,'https://bucketpruebaperros.s3.amazonaws.com/Perro+peruano/mediano/peruano+mediano.png',NOW());
+insert into dogs (idraza,idtamano,imagen,fecha) values (4,3,'https://bucketpruebaperros.s3.amazonaws.com/Perro+peruano/grande/peruano+grande.png',NOW());
+
+Use dog;
+select * from dogs;
+select * from raza;
+select * from tamano;
+
+Use dog;
+select d.imagen from dogs as d
+inner join raza as r on r.id=d.idraza
+inner join tamano as t on t.id=d.idtamano
+where r.raza="Fox Terrier" and t.tamano="Chico";
+
+Use dog;
+update dogs as d
+inner join raza as r on r.id=d.idraza
+inner join tamano as t on t.id=d.idtamano
+set d.imagen="https://bucketpruebaperros.s3.amazonaws.com/golden+retriever/chico/golden+chico.jpg"
+where r.id=1 and t.tamano=1;
+SET SQL_SAFE_UPDATES = 0;
+
+update raza
+set raza = 'GoldenRetriever' where id=2;
+
+update raza
+set raza = 'FoxTerrier' where id=1;
+
+update raza
+set raza = 'Perroperuano' where id=4;
+
+select * from raza;
+
+select * from dogs;
+
+update dogs
+set imagen = 'https://bucketpruebaperros.s3.amazonaws.com/golden+retriever/chico/golden+chico.png'
+where id= 4;
+
